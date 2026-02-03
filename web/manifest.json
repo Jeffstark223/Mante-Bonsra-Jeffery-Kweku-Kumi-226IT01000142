@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
     "name": "week2_portfolio",
     "short_name": "week2_portfolio",
+=======
+    "name": "week1_project",
+    "short_name": "week1_project",
+>>>>>>> 0ff874148fb4174eeb91bbc3323bed17e405db3b
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

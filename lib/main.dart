@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screen/portfolio_screen.dart'; // Make sure this file exists
+import 'screen/portfolio_screen.dart'; // You'll create this
 
 void main() {
   runApp(const MyApp());
@@ -14,10 +14,9 @@ class MyApp extends StatelessWidget {
       title: 'Professional Portfolio',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        // visualDensity: VisualDensity.adaptivePlatformDensity, // optional: remove if deprecated
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      debugShowCheckedModeBanner: false, // optional: removes debug banner
-      home: const PortfolioScreen(),
+      home: const PortfolioScreen(), // Your main screen
     );
   }
 }

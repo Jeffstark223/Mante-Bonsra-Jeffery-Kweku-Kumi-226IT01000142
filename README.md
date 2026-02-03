@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # week2_portfolio
+=======
+# week1_project
+>>>>>>> 0ff874148fb4174eeb91bbc3323bed17e405db3b
 
 A new Flutter project.
 

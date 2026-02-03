@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
+<<<<<<< HEAD
         android:label="week2_portfolio"
+=======
+        android:label="week1_project"
+>>>>>>> 0ff874148fb4174eeb91bbc3323bed17e405db3b
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
