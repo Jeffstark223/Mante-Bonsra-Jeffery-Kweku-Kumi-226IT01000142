@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'INFT 425 - Jeffery Bonsra',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: const HelloWorldScreen(),
     );
@@ -33,16 +33,16 @@ class HelloWorldScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const <Widget>[
             Text(
-              'Hello World',
+              'Hello World- My name is Jeffery Bonsra',
               style: TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
-                color: Colors.blue,
+                color: Color.fromARGB(255, 2, 251, 23),
               ),
             ),
             SizedBox(height: 20),
             Text(
-              'Department of Computing Sciences and Engineering',
+              'Department of Computing Sciences and Engineering''Aka Cossa',
               style: TextStyle(
                 fontSize: 16,
                 fontStyle: FontStyle.italic,
