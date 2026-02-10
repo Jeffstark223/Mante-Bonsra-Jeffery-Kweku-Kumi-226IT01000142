@@ -67,7 +67,7 @@ class PortfolioScreen extends StatelessWidget {
         const SizedBox(height: 16),
         const Text(
           '[Jeffery Bonsra]',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
             color: Color(0xFF0D47A1), 
@@ -76,7 +76,7 @@ class PortfolioScreen extends StatelessWidget {
         const SizedBox(height: 8),
         const Text(
           'BSc. Computer Science',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 18,
             color: Color(0xFF616161), 
           ),
