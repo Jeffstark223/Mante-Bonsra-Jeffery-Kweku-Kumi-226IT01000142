@@ -18,16 +18,18 @@ class ExpenseDatabase {
 
   // Initialize database
   Future<Database> _initDB(String filePath) async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, filePath);
-
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _createDB,
-    );
+  final dbPath = await getDatabasesPath();
+  if (dbPath == null) {
+    throw Exception("Could not get database path");
   }
+  final path = join(dbPath, filePath);
 
+  return await openDatabase(
+    path,
+    version: 1,
+    onCreate: _createDB,
+  );
+}
   // Create table when database is first created
   Future _createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';

@@ -8,10 +8,10 @@ import '../models/category.dart';
 class ExpenseDetailScreen extends StatelessWidget {
   final Expense expense;
 
-  const ExpenseDetailScreen({super.key, required this.expense});
+  const ExpenseDetailScreen({Key? key, required this.expense})
+      : super(key: key);
 
   Future<void> _deleteExpense(BuildContext context) async {
-    // Show confirmation dialog
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -24,7 +24,7 @@ class ExpenseDetailScreen extends StatelessWidget {
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            style: TextButton.styleFrom(primary: Colors.red),
             child: const Text('Delete'),
           ),
         ],
@@ -33,9 +33,7 @@ class ExpenseDetailScreen extends StatelessWidget {
 
     if (confirm == true) {
       await ExpenseDatabase.instance.deleteExpense(expense.id!);
-      if (context.mounted) {
-        Navigator.pop(context, true);
-      }
+      Navigator.pop(context, true);
     }
   }
 
@@ -44,9 +42,9 @@ class ExpenseDetailScreen extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => AddExpenseScreen(),
-        // In a real app, you'd pass the expense to edit
       ),
     );
+
     if (result == true) {
       Navigator.pop(context, true);
     }
@@ -55,7 +53,9 @@ class ExpenseDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('MMMM dd, yyyy');
-    final categoryIcon = ExpenseCategory.categoryIcons[expense.category] ?? Icons.category;
+    final categoryIcon =
+        ExpenseCategory.categoryIcons[expense.category] ??
+            Icons.category;
 
     return Scaffold(
       appBar: AppBar(
@@ -76,7 +76,6 @@ class ExpenseDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Amount Card
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(20),
@@ -84,7 +83,8 @@ class ExpenseDetailScreen extends StatelessWidget {
                   children: [
                     const Text(
                       'Amount',
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                      style:
+                          TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -99,10 +99,7 @@ class ExpenseDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
             const SizedBox(height: 16),
-            
-            // Details Card
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -138,7 +135,12 @@ class ExpenseDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailRow(IconData leadingIcon, String label, String value, {IconData? icon}) {
+  Widget _buildDetailRow(
+    IconData leadingIcon,
+    String label,
+    String value, {
+    IconData? icon,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(

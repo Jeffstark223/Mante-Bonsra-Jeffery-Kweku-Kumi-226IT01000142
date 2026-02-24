@@ -7,7 +7,7 @@ import '../widgets/expense_card.dart';
 import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -26,16 +26,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _refreshExpenses() async {
     setState(() => _isLoading = true);
-    
-    // Get all expenses from database
+
     final expenses = await ExpenseDatabase.instance.getAllExpenses();
-    
-    // Calculate total
+
     double total = 0;
     for (var expense in expenses) {
       total += expense.amount;
     }
-    
+
     setState(() {
       _expenses = expenses;
       _totalAmount = total;
@@ -55,7 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
-                // Total Amount Card
                 Container(
                   margin: const EdgeInsets.all(16),
                   padding: const EdgeInsets.all(20),
@@ -84,8 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                
-                // Expenses List
                 Expanded(
                   child: _expenses.isEmpty
                       ? Center(
@@ -125,16 +120,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               return ExpenseCard(
                                 expense: expense,
                                 onTap: () async {
-                                  // Navigate to detail screen
                                   final result = await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => ExpenseDetailScreen(
+                                      builder: (context) =>
+                                          ExpenseDetailScreen(
                                         expense: expense,
                                       ),
                                     ),
                                   );
-                                  // If expense was updated/deleted, refresh
+
                                   if (result == true) {
                                     _refreshExpenses();
                                   }
@@ -148,14 +143,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // Navigate to add expense screen
           final result = await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const AddExpenseScreen(),
             ),
           );
-          // If expense was added, refresh list
+
           if (result == true) {
             _refreshExpenses();
           }

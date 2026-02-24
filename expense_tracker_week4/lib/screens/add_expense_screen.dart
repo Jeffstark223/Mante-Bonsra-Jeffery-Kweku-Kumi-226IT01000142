@@ -5,7 +5,7 @@ import '../models/category.dart';
 import 'package:intl/intl.dart';
 
 class AddExpenseScreen extends StatefulWidget {
-  const AddExpenseScreen({super.key});
+  const AddExpenseScreen({Key? key}) : super(key: key);
 
   @override
   State<AddExpenseScreen> createState() => _AddExpenseScreenState();
@@ -36,19 +36,18 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
   Future<void> _saveExpense() async {
     if (_formKey.currentState!.validate()) {
-      // Create expense object
       final expense = Expense(
         title: _titleController.text,
         amount: double.parse(_amountController.text),
         category: _selectedCategory,
         date: _selectedDate,
-        notes: _notesController.text.isNotEmpty ? _notesController.text : null,
+        notes: _notesController.text.isNotEmpty
+            ? _notesController.text
+            : null,
       );
 
-      // Save to database
       await ExpenseDatabase.instance.createExpense(expense);
 
-      // Return true to indicate success
       if (mounted) {
         Navigator.pop(context, true);
       }
@@ -67,7 +66,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
           key: _formKey,
           child: ListView(
             children: [
-              // Title Field
               TextFormField(
                 controller: _titleController,
                 decoration: const InputDecoration(
@@ -82,10 +80,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   return null;
                 },
               ),
-              
               const SizedBox(height: 16),
-              
-              // Amount Field
               TextFormField(
                 controller: _amountController,
                 decoration: const InputDecoration(
@@ -104,10 +99,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   return null;
                 },
               ),
-              
               const SizedBox(height: 16),
-              
-              // Category Dropdown
               DropdownButtonFormField<String>(
                 value: _selectedCategory,
                 decoration: const InputDecoration(
@@ -127,10 +119,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   });
                 },
               ),
-              
               const SizedBox(height: 16),
-              
-              // Date Picker
               InkWell(
                 onTap: _selectDate,
                 child: InputDecorator(
@@ -140,20 +129,19 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     prefixIcon: Icon(Icons.calendar_today),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        DateFormat('MMM dd, yyyy').format(_selectedDate),
+                        DateFormat('MMM dd, yyyy')
+                            .format(_selectedDate),
                       ),
                       const Icon(Icons.arrow_drop_down),
                     ],
                   ),
                 ),
               ),
-              
               const SizedBox(height: 16),
-              
-              // Notes Field (optional)
               TextFormField(
                 controller: _notesController,
                 decoration: const InputDecoration(
@@ -163,14 +151,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 ),
                 maxLines: 3,
               ),
-              
               const SizedBox(height: 24),
-              
-              // Save Button
               ElevatedButton(
                 onPressed: _saveExpense,
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16),
                 ),
                 child: const Text('Save Expense'),
               ),

@@ -8,19 +8,19 @@ class ExpenseCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const ExpenseCard({
-    super.key,
+    Key? key,
     required this.expense,
     required this.onTap,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Format date
     final dateFormat = DateFormat('MMM dd, yyyy');
     final formattedDate = dateFormat.format(expense.date);
 
-    // Get category icon
-    final categoryIcon = ExpenseCategory.categoryIcons[expense.category] ?? Icons.category;
+    final categoryIcon =
+        ExpenseCategory.categoryIcons[expense.category] ??
+            Icons.category;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
