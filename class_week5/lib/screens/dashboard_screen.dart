@@ -8,15 +8,6 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
 
-    // Safely format account creation time
-    String accountCreated = 'Unknown';
-    if (user?.metadata.creationTime != null) {
-      accountCreated = user!.metadata.creationTime!
-          .toLocal()
-          .toString()
-          .substring(0, 16);
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Dashboard'),
@@ -54,10 +45,7 @@ class DashboardScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Welcome,',
-              style: Theme.of(context).textTheme.headline5,
-            ),
+            Text('Welcome,', style: Theme.of(context).textTheme.headline5),
             Text(
               user?.displayName ?? 'User',
               style: Theme.of(context)
@@ -81,7 +69,15 @@ class DashboardScreen extends StatelessWidget {
                       user?.emailVerified == true ? 'Yes' : 'No',
                     ),
                     const Divider(),
-                    _buildInfoRow('Account Created', accountCreated),
+                    _buildInfoRow(
+                      'Account Created',
+                      user?.metadata.creationTime != null
+                          ? user!.metadata.creationTime!
+                              .toLocal()
+                              .toString()
+                              .substring(0, 16)
+                          : 'Unknown',
+                    ),
                   ],
                 ),
               ),
@@ -94,10 +90,10 @@ class DashboardScreen extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                _buildDashboardTile(Icons.person, 'Profile', () {}),
-                _buildDashboardTile(Icons.settings, 'Settings', () {}),
-                _buildDashboardTile(Icons.history, 'History', () {}),
-                _buildDashboardTile(Icons.help, 'Help', () {}),
+                _buildDashboardTile(Icons.person, 'Profile', context),
+                _buildDashboardTile(Icons.settings, 'Settings', context),
+                _buildDashboardTile(Icons.history, 'History', context),
+                _buildDashboardTile(Icons.help, 'Help', context),
               ],
             ),
           ],
@@ -123,18 +119,18 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDashboardTile(IconData icon, String label, VoidCallback onTap) {
+  Widget _buildDashboardTile(IconData icon, String label, BuildContext context) {
     return Card(
       elevation: 2,
       child: InkWell(
-        onTap: onTap,
+        onTap: () {},
         borderRadius: BorderRadius.circular(8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 40, color: Colors.blue),
+            Icon(icon, size: 40, color: Theme.of(context).primaryColor),
             const SizedBox(height: 8),
-            Text(label),
+            Text(label, style: TextStyle(color: Theme.of(context).primaryColor)),
           ],
         ),
       ),

@@ -45,7 +45,6 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      // AuthWrapper will automatically redirect to DashboardScreen
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       if (e.code == 'user-not-found') {
@@ -82,10 +81,13 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               TextFormField(
                 controller: _emailController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Email',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.email),
+                  border: const OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.email, color: Theme.of(context).primaryColor),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  ),
                 ),
                 keyboardType: TextInputType.emailAddress,
                 validator: _validateEmail,
@@ -94,10 +96,13 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _passwordController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock),
+                  border: const OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.lock, color: Theme.of(context).primaryColor),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  ),
                 ),
                 obscureText: true,
                 validator: _validatePassword,
@@ -133,7 +138,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         );
                       },
-                child: const Text('Don\'t have an account? Sign Up'),
+                child: Text(
+                  'Don\'t have an account? Sign Up',
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
               ),
             ],
           ),

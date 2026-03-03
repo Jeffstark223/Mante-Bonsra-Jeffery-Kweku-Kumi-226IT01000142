@@ -53,7 +53,6 @@ class _SignupScreenState extends State<SignupScreen> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      // AuthWrapper will redirect automatically
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       if (e.code == 'email-already-in-use') {
@@ -79,6 +78,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final primary = Theme.of(context).primaryColor;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Create Account')),
       body: Padding(
@@ -90,10 +91,13 @@ class _SignupScreenState extends State<SignupScreen> {
             children: [
               TextFormField(
                 controller: _emailController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Email',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.email),
+                  border: const OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.email, color: primary),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: primary),
+                  ),
                 ),
                 validator: _validateEmail,
                 enabled: !_isLoading,
@@ -101,10 +105,13 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _passwordController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock),
+                  border: const OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.lock, color: primary),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: primary),
+                  ),
                 ),
                 obscureText: true,
                 validator: _validatePassword,
@@ -113,10 +120,13 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _confirmPasswordController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Confirm Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock_outline),
+                  border: const OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.lock_outline, color: primary),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: primary),
+                  ),
                 ),
                 obscureText: true,
                 validator: _validateConfirmPassword,
@@ -143,7 +153,10 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(height: 16),
               TextButton(
                 onPressed: _isLoading ? null : () => Navigator.pop(context),
-                child: const Text('Already have an account? Sign In'),
+                child: Text(
+                  'Already have an account? Sign In',
+                  style: TextStyle(color: primary),
+                ),
               ),
             ],
           ),
