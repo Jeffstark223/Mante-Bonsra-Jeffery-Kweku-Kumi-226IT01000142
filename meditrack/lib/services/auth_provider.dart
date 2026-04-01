@@ -1,45 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../models/user.dart';
-import 'dart:convert';
 
 class AuthProvider extends ChangeNotifier {
-  User? _user;
+  // Temporary in-memory user storage
+  final Map<String, String> _users = {};
 
-  User? get user => _user;
+  String? _currentUser;
 
+  // ── LOGIN ─────────────────────────────────────────────
+  Future<bool> login(String username, String password) async {
+    await Future.delayed(const Duration(milliseconds: 500)); // simulate loading
+
+    if (_users.containsKey(username) &&
+        _users[username] == password) {
+      _currentUser = username;
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  // ── SIGNUP ────────────────────────────────────────────
   Future<bool> signup(String username, String password) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await Future.delayed(const Duration(milliseconds: 500)); // simulate loading
 
-    if (prefs.containsKey('user')) return false;
+    if (_users.containsKey(username)) {
+      return false; // user already exists
+    }
 
-    User newUser = User(username: username, password: password);
-    await prefs.setString('user', json.encode(newUser.toMap()));
-    _user = newUser;
+    _users[username] = password;
+    _currentUser = username;
     notifyListeners();
     return true;
   }
 
-  Future<bool> login(String username, String password) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('user')) return false;
-
-    String? userData = prefs.getString('user');
-    if (userData == null) return false;
-
-    User storedUser = User.fromMap(Map<String, String>.from(json.decode(userData)));
-
-    if (storedUser.username == username && storedUser.password == password) {
-      _user = storedUser;
-      notifyListeners();
-      return true;
-    }
-
-    return false;
-  }
-
-  Future<void> logout() async {
-    _user = null;
+  // ── LOGOUT ────────────────────────────────────────────
+  void logout() {
+    _currentUser = null;
     notifyListeners();
   }
+
+  // ── GET CURRENT USER ──────────────────────────────────
+  String? get currentUser => _currentUser;
+
+  // ── CHECK IF LOGGED IN ────────────────────────────────
+  bool get isLoggedIn => _currentUser != null;
 }

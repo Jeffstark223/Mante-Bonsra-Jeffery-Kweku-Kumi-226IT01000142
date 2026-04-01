@@ -20,8 +20,11 @@ class MediTrackApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'MediTrack',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-          fontFamily: 'Roboto',
+          primarySwatch: Colors.teal,
+          scaffoldBackgroundColor: Color(0xFFF5F7FA),
+          textTheme: TextTheme(
+            bodyText2: TextStyle(fontSize: 16),
+          ),
         ),
         home: LoginScreen(),
       ),
