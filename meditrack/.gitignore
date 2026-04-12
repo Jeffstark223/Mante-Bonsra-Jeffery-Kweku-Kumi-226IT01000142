@@ -5,18 +5,9 @@
 *.swp
 .DS_Store
 .atom/
-<<<<<<< HEAD
-.build/
 .buildlog/
 .history
 .svn/
-.swiftpm/
-migrate_working_dir/
-=======
-.buildlog/
-.history
-.svn/
->>>>>>> Initial commit - MediTrack app with auth and UI
 
 # IntelliJ related
 *.iml
@@ -33,13 +24,6 @@ migrate_working_dir/
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
-<<<<<<< HEAD
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
-/coverage/
-=======
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
@@ -49,7 +33,6 @@ migrate_working_dir/
 
 # Web related
 lib/generated_plugin_registrant.dart
->>>>>>> Initial commit - MediTrack app with auth and UI
 
 # Symbolication related
 app.*.symbols

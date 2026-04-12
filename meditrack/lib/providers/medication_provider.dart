@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/medication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import '../models/medication.dart';
 
 class MedicationProvider extends ChangeNotifier {
   List<Medication> _medications = [];
@@ -19,22 +19,32 @@ class MedicationProvider extends ChangeNotifier {
   }
 
   void removeMedication(Medication med) {
-    _medications.removeWhere((m) => m.id == med.id);
+    _medications.remove(med);
     saveMedications();
     notifyListeners();
   }
 
+  // 💾 SAVE DATA
   Future<void> saveMedications() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> meds = _medications.map((m) => json.encode(m.toMap())).toList();
-    await prefs.setStringList('medications', meds);
+    final prefs = await SharedPreferences.getInstance();
+
+    List<String> meds =
+        _medications.map((m) => jsonEncode(m.toJson())).toList();
+
+    prefs.setStringList('medications', meds);
   }
 
+  // 📥 LOAD DATA
   Future<void> loadMedications() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
+
     List<String>? meds = prefs.getStringList('medications');
+
     if (meds != null) {
-      _medications = meds.map((m) => Medication.fromMap(json.decode(m))).toList();
+      _medications = meds
+          .map((m) => Medication.fromJson(jsonDecode(m)))
+          .toList();
+
       notifyListeners();
     }
   }
